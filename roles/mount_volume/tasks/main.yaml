@@ -1,0 +1,26 @@
+- name: check if volume sdb exists
+  stat:
+    path: /dev/sdb
+  register: vol
+
+- name: create file system on sdb
+  filesystem:
+    fstype: ext4
+    dev: /dev/sdb
+  when: vol.stat.exists
+
+- name: create mount directory
+  file:
+    path: /data
+    state: directory
+  when: vol.stat.exists
+
+- name: mount volume
+  mount:
+    name: "/data"
+    src: "/dev/sdb"
+    fstype: ext4
+    opts: "defaults,nofail"
+    state: mounted
+  when: vol.stat.exists
+

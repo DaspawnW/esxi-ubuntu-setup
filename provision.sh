@@ -1,0 +1,1 @@
+ansible-playbook -i hosts -v -b -c ssh --ask-pass --ask-sudo-pass provision.yml

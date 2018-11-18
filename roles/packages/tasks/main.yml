@@ -1,0 +1,12 @@
+- name: Install universe repository
+  command: add-apt-repository universe
+
+- name: Install a few more packages
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - jq
+
+- name: Install security updates
+  shell: "apt-get -s dist-upgrade | grep \"^Inst\" | grep -i securi | awk -F \" \" {'print $2'} | xargs apt-get install"
