@@ -26,8 +26,8 @@
   lineinfile:
     path: /etc/sudoers
     state: present
-    regexp: '^%ubuntu\s'
-    line: '%ubuntu ALL=(ALL) NOPASSWD: ALL'
+    regexp: "^%{{ ansible_user }}\\s"
+    line: "%{{ ansible_user }} ALL=(ALL) NOPASSWD: ALL"
 
 - name: Restart sshd
   systemd:
